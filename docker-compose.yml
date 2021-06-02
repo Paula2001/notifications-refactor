@@ -1,0 +1,26 @@
+version : '3.7'
+
+services:
+  laravel:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    container_name: "notification_Adastra_one"
+    command: [ "php", "artisan", "serve", "--host", "0.0.0.0", "--port", "5000" ]
+    depends_on:
+      - "notification_Adastra_one-mysql"
+    ports:
+      - 5000:5000
+
+  notification_Adastra_one-mysql:
+    image: mysql:8
+    container_name: notification_Adastra_one-mysql
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+
+volumes:
+  mysql_data:
